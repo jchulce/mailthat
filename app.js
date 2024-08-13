@@ -1,12 +1,16 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const params = new URLSearchParams(window.location.search);
-    const mailto = params.get('mailto');
+    // Get the full query string
+    const queryString = window.location.search;
+    
+    // Extract the 'mailto' parameter manually
+    const mailtoIndex = queryString.indexOf('mailto=');
+    if (mailtoIndex !== -1) {
+        const mailto = queryString.substring(mailtoIndex + 7); // +7 to skip "mailto="
 
-    if (mailto) {
-        // Show email options if a mailto parameter is present
+        // Show email options
         document.getElementById('emailOptions').classList.remove('hidden');
         
-        // Parse mailto parameters
+        // Decode and process the mailto link
         const decodedMailto = decodeURIComponent(mailto);
         const mailtoLink = `mailto:${decodedMailto}`;
         const recipients = decodedMailto.split('?')[0];
