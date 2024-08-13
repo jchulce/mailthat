@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Helper</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .option {
+            margin: 10px 0;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="infoScreen" class="hidden">
+            <h1>Email Helper Service</h1>
+            <p>To use this service, replace your <code>mailto:</code> links with our domain. The link will be interpreted, and users will be given multiple options to send their email.</p>
+        </div>
+        <div id="emailOptions" class="hidden">
+            <h2>Email Options</h2>
+            <div class="option">
+                <button id="mailtoLink">Open in Default Mail Client</button>
+            </div>
+            <div class="option">
+                <button id="copyToClipboard">Copy Recipients to Clipboard</button>
+            </div>
+            <div class="option">
+                <h3>Open in Web Email Clients:</h3>
+                <ul>
+                    <li><a id="gmailLink" href="#" target="_blank">Gmail</a></li>
+                    <li><a id="outlookLink" href="#" target="_blank">Outlook</a></li>
+                    <li><a id="yahooLink" href="#" target="_blank">Yahoo Mail</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
