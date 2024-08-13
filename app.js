@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const params = new URLSearchParams(window.location.search);
     const mailto = params.get('mailto');
-    
+
     if (mailto) {
         // Show email options if a mailto parameter is present
         document.getElementById('emailOptions').classList.remove('hidden');
