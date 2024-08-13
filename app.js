@@ -1,24 +1,36 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Get the full query string
-    const queryString = window.location.search;
-    
-    // Extract the 'mailto' parameter manually
-    const mailtoIndex = queryString.indexOf('mailto=');
-    if (mailtoIndex !== -1) {
-        const mailto = queryString.substring(mailtoIndex + 7); // +7 to skip "mailto="
+    // Get the full query string without the initial "?"
+    const queryString = window.location.search.substring(1);
 
+    let mailto = '';
+
+    // Check if the URL starts with "mailto:"
+    if (queryString.startsWith("mailto:")) {
+        mailto = queryString.substring(7); // Skip "mailto:"
+    } else if (queryString.startsWith("mailto=")) {
+        mailto = queryString.substring(7); // Skip "mailto="
+    }
+
+    if (mailto) {
         // Show email options
         document.getElementById('emailOptions').classList.remove('hidden');
         
         // Decode and process the mailto link
-        const decodedMailto = decodeURIComponent(mailto);
-        const mailtoLink = `mailto:${decodedMailto}`;
-        const recipients = decodedMailto.split('?')[0];
-        const subjectAndBody = decodedMailto.split('?')[1] || '';
+        const [recipients, queryParams] = mailto.split('?');
+        const mailtoLink = `mailto:${recipients}`;
 
-        // Update mailto link
+        // Parse the query parameters
+        const params = new URLSearchParams(queryParams || '');
+        const subject = params.get('subject') || '';
+        const body = params.get('body') || '';
+        const cc = params.get('cc') || '';
+        const bcc = params.get('bcc') || '';
+
+        // Build the full mailto link with subject, body, cc, and bcc
+        const fullMailtoLink = `${mailtoLink}?${params.toString()}`;
+
         document.getElementById('mailtoLink').addEventListener('click', function() {
-            window.location.href = mailtoLink;
+            window.location.href = fullMailtoLink;
         });
 
         // Copy recipients to clipboard
@@ -28,9 +40,9 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         // Prepare web email client links
-        const gmailBaseUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipients}&${subjectAndBody}`;
-        const outlookBaseUrl = `https://outlook.live.com/owa/?path=/mail/action/compose&to=${recipients}&${subjectAndBody}`;
-        const yahooBaseUrl = `https://compose.mail.yahoo.com/?to=${recipients}&${subjectAndBody}`;
+        const gmailBaseUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const outlookBaseUrl = `https://outlook.live.com/owa/?path=/mail/action/compose&to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const yahooBaseUrl = `https://compose.mail.yahoo.com/?to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subj=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
         document.getElementById('gmailLink').href = gmailBaseUrl;
         document.getElementById('outlookLink').href = outlookBaseUrl;
