@@ -43,12 +43,16 @@ document.addEventListener("DOMContentLoaded", function() {
         const gmailBaseUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         const gmailAppURl = `googlegmail:///co?to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         const outlookBaseUrl = `https://outlook.live.com/owa/?path=/mail/action/compose&to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const outlookAppUrl = `ms-outlook://compose?to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         const yahooBaseUrl = `https://compose.mail.yahoo.com/?to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subj=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const yahooAppUrl = `ymail://mail/compose?to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
         document.getElementById('gmailLink').href = gmailBaseUrl;
         document.getElementById('gmailAppLink').href = gmailAppURl;
         document.getElementById('outlookLink').href = outlookBaseUrl;
+        document.getElementById('outlookAppLink').href = outlookAppUrl;
         document.getElementById('yahooLink').href = yahooBaseUrl;
+        document.getElementById('yahooAppLink').href = yahooAppUrl;
     } else {
         // Show informational screen if no mailto parameter
         document.getElementById('infoScreen').classList.remove('hidden');
