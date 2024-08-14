@@ -41,10 +41,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Prepare web email client links
         const gmailBaseUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const gmailAppURl = `googlegmail:///co?to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         const outlookBaseUrl = `https://outlook.live.com/owa/?path=/mail/action/compose&to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         const yahooBaseUrl = `https://compose.mail.yahoo.com/?to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subj=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
         document.getElementById('gmailLink').href = gmailBaseUrl;
+        document.getElementById('gmailAppLink').href = gmailAppURl;
         document.getElementById('outlookLink').href = outlookBaseUrl;
         document.getElementById('yahooLink').href = yahooBaseUrl;
     } else {
