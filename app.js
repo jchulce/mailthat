@@ -58,9 +58,12 @@ document.addEventListener("DOMContentLoaded", function() {
             if (subject) params.append('subject', subject);
             if (body) params.append('body', body);
 
-            const mailtoLink = `/?mailto:${to}?${params.toString()}`;
+            const mailtoLink = `mailto:${to}?${params.toString()}`;
+            const mailthatLink = `/?mailto:${to}?${params.toString()}`;
+            const generatedMailto = document.getElementById('generatedMailto');
             const generatedLink = document.getElementById('generatedLink');
-            generatedLink.href = mailtoLink;
+            generatedMailto.innertext = mailtoLink
+            generatedLink.href = mailthatLink;
             document.getElementById('generatedLinkContainer').classList.remove('hidden');
         });
     }
