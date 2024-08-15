@@ -67,6 +67,34 @@
             <h3>Demo</h3>
             Given <code>mailto:demo@mailthat.org</code>, your mailthat.org link would be <br><code><a href="https://mailthat.org?mailto:demo@mailthat.org">https://mailthat.org?mailto:demo@mailthat.org</a></code>
             <p><a href="?mailto:demo@mailthat.org">See it in action</a></p>
+            <h3>Create a Mailto Link</h3>
+            <form id="generateMailtoForm">
+                <div>
+                    <label for="createTo">To:</label>
+                    <input type="text" id="createTo" name="to" required>
+                </div>
+                <div>
+                    <label for="createCc">CC:</label>
+                    <input type="text" id="createCc" name="cc">
+                </div>
+                <div>
+                    <label for="createBcc">BCC:</label>
+                    <input type="text" id="createBcc" name="bcc">
+                </div>
+                <div>
+                    <label for="createSubject">Subject:</label>
+                    <input type="text" id="createSubject" name="subject">
+                </div>
+                <div>
+                    <label for="createBody">Body:</label>
+                    <textarea id="createBody" name="body"></textarea>
+                </div>
+            <button type="submit">Generate Mailto Link</button>
+            </form>
+        <div id="generatedLinkContainer" class="hidden">
+            <h3>Your Generated Link:</h3>
+            <a id="generatedLink" href="#">Click here to send an email</a>
+        </div>
             <h3>Security and Privacy</h3>
             <p>This service works client-side in your web browser; information is not processed or stored by the web server except as necessary to deliver the web page to you and otherwise operate the service. There are no cookies and no third-party trackers. Your information is not sold. </p>
         </div>
