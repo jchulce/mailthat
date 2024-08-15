@@ -30,10 +30,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         form.addEventListener('input', updateLinks);
 
-        document.getElementById('mailtoLink').addEventListener('click', function() {
-            window.location.href = createMailtoLink();
-        });
-
         document.getElementById('copyToClipboard').addEventListener('click', function() {
             navigator.clipboard.writeText(document.getElementById('to').value);
             alert('Recipients copied to clipboard!');
@@ -67,9 +63,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const subject = document.getElementById('subject').value;
         const body = document.getElementById('body').value;
 
-        document.getElementById('mailtoLink').addEventListener('click', function() {
-            window.location.href = mailtoLink;
-        });
+        document.getElementById('mailtoLink').href = mailtoLink;
 
         //Update email client links
         document.getElementById('gmailLink').href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -88,4 +82,12 @@ document.addEventListener("DOMContentLoaded", function() {
     const newUrl = `?mailto:${encodeURIComponent(to)}&${params.toString()}`;
     history.replaceState(null, '', newUrl);
     }
+    document.getElementById('copyToClipboard').addEventListener('click', function() {
+        const to = document.getElementById('to').value; // Get the updated 'to' value directly
+        navigator.clipboard.writeText(to).then(function() {
+            alert('Recipients copied to clipboard!');
+        }).catch(function(error) {
+            alert('Failed to copy recipients: ' + error);
+        });
+    });
 });
