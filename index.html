@@ -72,6 +72,32 @@
         </div>
         <div id="emailOptions" class="hidden">
             <h2>Email Options</h2>
+            <details>
+                <summary>email details</summary>
+                <p>The buttons and links on this page automatically update based on this form</p>
+                <form id="optionsForm">
+                    <div>
+                        <label for="to">To:</label>
+                        <input type="text" id="to" name="to">
+                    </div>
+                    <div>
+                        <label for="cc">CC:</label>
+                        <input type="text" id="cc" name="cc">
+                    </div>
+                    <div>
+                        <label for="bcc">BCC:</label>
+                        <input type="text" id="bcc" name="bcc">
+                    </div>
+                    <div>
+                        <label for="subject">Subject:</label>
+                        <input type="text" id="subject" name="subject">
+                    </div>
+                    <div>
+                        <label for="body">Body:</label>
+                        <textarea id="body" name="body"></textarea>
+                    </div>
+                </form>
+            </details>
             <div class="option">
                 <button id="mailtoLink">Open in Default Mail Client</button>
             </div>

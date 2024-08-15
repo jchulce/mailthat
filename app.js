@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Get the full query string without the initial "?"
+    const optionsform = document.getElementById('optionsForm');
     const queryString = window.location.search.substring(1);
 
     let mailto = '';
@@ -17,54 +18,74 @@ document.addEventListener("DOMContentLoaded", function() {
         
         // Decode and process the mailto link
         const [recipients, queryParams] = mailto.split('?');
-        const mailtoLink = `mailto:${recipients}`;
+        const query = new URLSearchParams(queryParams || '');
 
-        // Parse the query parameters
-        const params = new URLSearchParams(queryParams || '');
-        const subject = params.get('subject') || '';
-        const body = params.get('body') || '';
-        const cc = params.get('cc') || '';
-        const bcc = params.get('bcc') || '';
+        document.getElementById('to').value = recipients || '';
+        document.getElementById('cc').value = query.get('cc') || '';
+        document.getElementById('bcc').value = query.get('bcc') || '';
+        document.getElementById('subject').value = query.get('subject') || '';
+        document.getElementById('body').value = query.get('body') || '';
 
-        // Build the full mailto link with subject, body, cc, and bcc
-        const fullMailtoLink = `${mailtoLink}?${params.toString()}`;
+        updateLinks();
+
+        form.addEventListener('input', updateLinks);
 
         document.getElementById('mailtoLink').addEventListener('click', function() {
-            window.location.href = fullMailtoLink;
+            window.location.href = createMailtoLink();
         });
 
-        // Copy recipients to clipboard
         document.getElementById('copyToClipboard').addEventListener('click', function() {
-            navigator.clipboard.writeText(recipients);
+            navigator.clipboard.writeText(document.getElementById('to').value);
             alert('Recipients copied to clipboard!');
         });
-
-        // Prepare web email client links
-        const gmailBaseUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        const gmailAppURl = `googlegmail:///co?to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        const outlookBaseUrl = `https://outlook.live.com/owa/?path=/mail/action/compose?to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        const outlookAppUrl = `ms-outlook://compose?to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        const yahooBaseUrl = `https://compose.mail.yahoo.com/?to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subj=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        const yahooAppUrl = `ymail://mail/compose?to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        const fastmailBaseUrl = `https://app.fastmail.com/mail/inbox/compose?to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        const fastmailAppUrl = `fastmail://mail/compose?to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        const sparkAppUrl = `readdle-spark://compose?recipient=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        const airmailAppUrl = `airmail://compose?to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        const dispatchAppUrl = `x-dispatch:///compose?to=${recipients}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-        document.getElementById('gmailLink').href = gmailBaseUrl;
-        document.getElementById('gmailAppLink').href = gmailAppURl;
-        document.getElementById('outlookLink').href = outlookBaseUrl;
-        document.getElementById('outlookAppLink').href = outlookAppUrl;
-        document.getElementById('yahooLink').href = yahooBaseUrl;
-        document.getElementById('yahooAppLink').href = yahooAppUrl;
-        document.getElementById('fastmailLink').href = fastmailBaseUrl;
-        document.getElementById('fastmailAppLink').href = fastmailAppUrl;
-        document.getElementById('sparkAppLink').href = sparkAppUrl;
-        document.getElementById('airmailAppLink').href = airmailAppUrl;
-        document.getElementById('dispatchAppLink').href = dispatchAppUrl;
     } else {
         // Show informational screen if no mailto parameter
         document.getElementById('infoScreen').classList.remove('hidden');
+    }
+
+    function createMailtoLink() {
+        const to = document.getElementById('to').value;
+        const cc = document.getElementById('cc').value;
+        const bcc = document.getElementById('bcc').value;
+        const subject = document.getElementById('subject').value;
+        const body = document.getElementById('body').value;
+        
+        const params = new URLSearchParams();
+        if (cc) params.append('cc', cc);
+        if (bcc) params.append('bcc', bcc);
+        if (subject) params.append('subject', subject);
+        if (body) params.append('body', body);
+        
+        return `mailto:${to}?${params.toString()}`;
+    }
+
+    function updateLinks() {
+        const mailtoLink = createMailtoLink();
+        const to = document.getElementById('to').value;
+        const cc = document.getElementById('cc').value;
+        const bcc = document.getElementById('bcc').value;
+        const subject = document.getElementById('subject').value;
+        const body = document.getElementById('body').value;
+
+        document.getElementById('mailtoLink').addEventListener('click', function() {
+            window.location.href = mailtoLink;
+        });
+
+        //Update email client links
+        document.getElementById('gmailLink').href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        document.getElementById('gmailAppLink').href = `googlegmail:///co?to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        document.getElementById('outlookLink').href = `https://outlook.live.com/owa/?path=/mail/action/compose?to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        document.getElementById('outlookAppLink').href = `ms-outlook://compose?to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        document.getElementById('yahooLink').href = `https://compose.mail.yahoo.com/?to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subj=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        document.getElementById('yahooAppLink').href = `ymail://mail/compose?to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        document.getElementById('fastmailLink').href = `https://app.fastmail.com/mail/inbox/compose?to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        document.getElementById('fastmailAppLink').href = `fastmail://mail/compose?to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        document.getElementById('sparkAppLink').href = `readdle-spark://compose?recipient=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        document.getElementById('airmailAppLink').href = `airmail://compose?to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        document.getElementById('dispatchAppLink').href = `x-dispatch:///compose?to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    // Update the browser's URL bar
+    const newUrl = `?mailto:${encodeURIComponent(to)}&${params.toString()}`;
+    history.replaceState(null, '', newUrl);
     }
 });
