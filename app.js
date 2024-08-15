@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const mailthatLink = `/?mailto:${to}?${params.toString()}`;
             const generatedMailto = document.getElementById('generatedMailto');
             const generatedLink = document.getElementById('generatedLink');
-            generatedMailto.innertext = mailtoLink
+            generatedMailto.textContent = mailtoLink
             generatedLink.href = mailthatLink;
             document.getElementById('generatedLinkContainer').classList.remove('hidden');
         });
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const body = document.getElementById('body').value;
 
         document.getElementById('mailtoLink').href = mailtoLink;
-        });
+        
         //Update email client links
         document.getElementById('gmailLink').href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         document.getElementById('gmailAppLink').href = `googlegmail:///co?to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -110,5 +110,5 @@ document.addEventListener("DOMContentLoaded", function() {
         // Update the browser's URL bar
         //const newUrl = `?mailto:${encodeURIComponent(to)}&${params.toString()}`;
         //history.replaceState(null, '', newUrl);
-    }
+    };
 });
