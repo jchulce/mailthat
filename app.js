@@ -92,8 +92,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const subject = document.getElementById('subject').value;
         const body = document.getElementById('body').value;
 
-        document.getElementById('mailtoLink').addEventListener('click', function() {
-            window.location.href = mailtoLink;
+        document.getElementById('mailtoLink').href = mailtoLink;
         });
         //Update email client links
         document.getElementById('gmailLink').href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
