@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="dark light">
     <title>mailthat.org Email Helper</title>
+    <base target="_blank">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -68,6 +69,8 @@
             Given <code>mailto:demo@mailthat.org</code>, your mailthat.org link would be <br><code><a href="https://mailthat.org?mailto:demo@mailthat.org">https://mailthat.org?mailto:demo@mailthat.org</a></code>
             <p><a href="?mailto:demo@mailthat.org">See it in action</a></p>
             <h3>Create a Mailto Link</h3>
+            <details>
+                <summary>Don't have a mailto: link already? Make one now!</summary>
             <form id="generateMailtoForm">
                 <div>
                     <label for="createTo">To:</label>
@@ -95,6 +98,7 @@
             <h3>Your Generated Link:</h3>
             <a id="generatedLink" href="#">Click here to send an email</a>
         </div>
+    </details>
             <h3>Security and Privacy</h3>
             <p>This service works client-side in your web browser; information is not processed or stored by the web server except as necessary to deliver the web page to you and otherwise operate the service. There are no cookies and no third-party trackers. Your information is not sold. </p>
         </div>
@@ -127,37 +131,37 @@
                 </form>
             </details>
             <div class="option">
-                <button id="mailtoLink">Open in Default Mail Client</button>
+                <h2 id="mailtoLink">Open in Default Mail Client</h2>
             </div>
             <div class="option">
-                <button id="copyToClipboard">Copy Recipients to Clipboard</button>
+                <h2 id="copyToClipboard">Copy Recipients to Clipboard</h2>
             </div>
             <hr>
             <div class="option">
                 <h2>Open in Email Client:</h3>
                 <ul>
                     <li><h3>Google Gmail</h3>
-                        <a id="gmailLink" href="#" target="_blank">Gmail&nbsp;Web</a>
+                        <a id="gmailLink" href="#">Gmail&nbsp;Web</a>
                         &nbsp;&nbsp;&nbsp;&nbsp; 
-                        <a id="gmailAppLink" href="#" target="_blank">Gmail&nbsp;App</a></li>
+                        <a id="gmailAppLink" href="#">Gmail&nbsp;App</a></li>
                     <li><h3>Microsoft Outlook</h3>
-                        <a id="outlookLink" href="#" target="_blank">Outlook&nbsp;Web&nbsp;Access</a>
+                        <a id="outlookLink" href="#">Outlook&nbsp;Web&nbsp;Access</a>
                         &nbsp;&nbsp;&nbsp;&nbsp; 
-                        <a id="outlookAppLink" href="#" target="_blank">Outlook&nbsp;Desktop/Mobile&nbsp;App</a>
+                        <a id="outlookAppLink" href="#">Outlook&nbsp;Desktop/Mobile&nbsp;App</a>
                     </li>
                     <li><h3>Yahooo Mail</h3>
-                        <a id="yahooLink" href="#" target="_blank">Yahoo&nbsp;Web</a>
+                        <a id="yahooLink" href="#">Yahoo&nbsp;Web</a>
                         &nbsp;&nbsp;&nbsp;&nbsp; 
-                        <a id="yahooAppLink" href="#" target="_blank">Yahoo&nbsp;App</a>
+                        <a id="yahooAppLink" href="#">Yahoo&nbsp;App</a>
                     </li>
                     <li><h3>Fastmail</h3>
-                        <a id="fastmailLink" href="#" target="_blank">Fastmail&nbsp;Web</a>
+                        <a id="fastmailLink" href="#">Fastmail&nbsp;Web</a>
                         &nbsp;&nbsp;&nbsp;&nbsp; 
-                        <a id="fastmailAppLink" href="#" target="_blank">Fastmail&nbsp;App</a>
+                        <a id="fastmailAppLink" href="#">Fastmail&nbsp;App</a>
                     </li>
-                    <li><a id="sparkAppLink" href="#" target="_blank"><h4>Spark</h4></a></li>
-                    <li><a id="airmailAppLink" href="#" target="_blank"><h4>Airmail</h4></a></li>
-                    <li><a id="dispatchAppLink" href="#" target="_blank"><h4>Dispatch</h4></a></li>
+                    <li><a id="sparkAppLink" href="#"><h4>Spark</h4></a></li>
+                    <li><a id="airmailAppLink" href="#"><h4>Airmail</h4></a></li>
+                    <li><a id="dispatchAppLink" href="#"><h4>Dispatch</h4></a></li>
                 </ul>
             </div>
         </div>
