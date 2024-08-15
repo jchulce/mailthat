@@ -1,42 +1,68 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Get the full query string without the initial "?"
-    const optionsform = document.getElementById('optionsForm');
-    const queryString = window.location.search.substring(1);
-
+    const form = document.getElementById('emailForm');
+    const params = new URLSearchParams(window.location.search.substring(1));
     let mailto = '';
 
     // Check if the URL starts with "mailto:"
-    if (queryString.startsWith("mailto:")) {
-        mailto = queryString.substring(7); // Skip "mailto:"
-    } else if (queryString.startsWith("mailto=")) {
-        mailto = queryString.substring(7); // Skip "mailto="
+    if (window.location.search.startsWith("?mailto:")) {
+        mailto = window.location.search.substring(8); // Skip "?mailto:"
+    } else if (window.location.search.startsWith("?mailto=")) {
+        mailto = window.location.search.substring(8); // Skip "?mailto="
     }
 
     if (mailto) {
-        // Show email options
         document.getElementById('emailOptions').classList.remove('hidden');
-        
+
         // Decode and process the mailto link
         const [recipients, queryParams] = mailto.split('?');
         const query = new URLSearchParams(queryParams || '');
 
+        // Set form values from the mailto parameters
         document.getElementById('to').value = recipients || '';
         document.getElementById('cc').value = query.get('cc') || '';
         document.getElementById('bcc').value = query.get('bcc') || '';
         document.getElementById('subject').value = query.get('subject') || '';
         document.getElementById('body').value = query.get('body') || '';
 
+        // Update links on page load
         updateLinks();
 
+        // Update links in real-time as the form is modified
         form.addEventListener('input', updateLinks);
 
+        // Attach clipboard functionality
         document.getElementById('copyToClipboard').addEventListener('click', function() {
-            navigator.clipboard.writeText(document.getElementById('to').value);
-            alert('Recipients copied to clipboard!');
+            const to = document.getElementById('to').value; // Get the updated 'to' value directly
+            navigator.clipboard.writeText(to).then(function() {
+                alert('Recipients copied to clipboard!');
+            }).catch(function(error) {
+                alert('Failed to copy recipients: ' + error);
+            });
         });
+
     } else {
-        // Show informational screen if no mailto parameter
+        // Show landing page with mailto link generator form
         document.getElementById('infoScreen').classList.remove('hidden');
+
+        document.getElementById('generateMailtoForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const to = document.getElementById('createTo').value;
+            const cc = document.getElementById('createCc').value;
+            const bcc = document.getElementById('createBcc').value;
+            const subject = document.getElementById('createSubject').value;
+            const body = document.getElementById('createBody').value;
+
+            const params = new URLSearchParams();
+            if (cc) params.append('cc', cc);
+            if (bcc) params.append('bcc', bcc);
+            if (subject) params.append('subject', subject);
+            if (body) params.append('body', body);
+
+            const mailtoLink = `mailto:${to}?${params.toString()}`;
+            const generatedLink = document.getElementById('generatedLink');
+            generatedLink.href = mailtoLink;
+            document.getElementById('generatedLinkContainer').classList.remove('hidden');
+        });
     }
 
     function createMailtoLink() {
@@ -45,13 +71,13 @@ document.addEventListener("DOMContentLoaded", function() {
         const bcc = document.getElementById('bcc').value;
         const subject = document.getElementById('subject').value;
         const body = document.getElementById('body').value;
-        
+
         const params = new URLSearchParams();
         if (cc) params.append('cc', cc);
         if (bcc) params.append('bcc', bcc);
         if (subject) params.append('subject', subject);
         if (body) params.append('body', body);
-        
+
         return `mailto:${to}?${params.toString()}`;
     }
 
@@ -64,7 +90,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const body = document.getElementById('body').value;
 
         document.getElementById('mailtoLink').href = mailtoLink;
-
         //Update email client links
         document.getElementById('gmailLink').href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         document.getElementById('gmailAppLink').href = `googlegmail:///co?to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -78,16 +103,8 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('airmailAppLink').href = `airmail://compose?to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         document.getElementById('dispatchAppLink').href = `x-dispatch:///compose?to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-    // Update the browser's URL bar
-    const newUrl = `?mailto:${encodeURIComponent(to)}&${params.toString()}`;
-    history.replaceState(null, '', newUrl);
+        // Update the browser's URL bar
+        const newUrl = `?mailto:${encodeURIComponent(to)}&${params.toString()}`;
+        history.replaceState(null, '', newUrl);
     }
-    document.getElementById('copyToClipboard').addEventListener('click', function() {
-        const to = document.getElementById('to').value; // Get the updated 'to' value directly
-        navigator.clipboard.writeText(to).then(function() {
-            alert('Recipients copied to clipboard!');
-        }).catch(function(error) {
-            alert('Failed to copy recipients: ' + error);
-        });
-    });
 });
