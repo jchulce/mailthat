@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('dispatchAppLink').href = `x-dispatch:///compose?to=${encodeURIComponent(to)}&cc=${encodeURIComponent(cc)}&bcc=${encodeURIComponent(bcc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
         // Update the browser's URL bar
-        const newUrl = `?mailto:${encodeURIComponent(to)}&${params.toString()}`;
-        history.replaceState(null, '', newUrl);
+        //const newUrl = `?mailto:${encodeURIComponent(to)}&${params.toString()}`;
+        //history.replaceState(null, '', newUrl);
     }
 });
